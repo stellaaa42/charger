@@ -1,0 +1,8 @@
+usbc charger board
+
+board size: 55mmx20mm-24mm(curved)
+
+main controller: arduino/stm
+relay -> cutoff 
+temp/current/voltage_divider sensor 
+usbc connector
