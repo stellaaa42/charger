@@ -3,6 +3,11 @@ usbc charger board
 board size: 55mmx20mm-24mm(curved)
 
 main controller: arduino/stm
+stm32f405 pill
+converter chips: PQDE6W-Q110 50-600w I_inp=160v I_out=4-500mA
+
+
+
 relay -> cutoff 
 temp/current/voltage_divider sensor 
 usbc connector
