@@ -2,8 +2,8 @@
 #include <WebServer.h>
 #include <FastLED.h>
 
-const char* ssid = "Riston_WIFI";
-const char* password = "Garge111";
+const char* ssid = "";
+const char* password = "";
 
 // WebServer object on port 80
 WebServer server(80);
