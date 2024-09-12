@@ -1,12 +1,12 @@
 #include <WiFi.h>
 #include <WebServer.h>
 
-const char* ssid = "Riston_WIFI";
-const char* password = "Garge111";
+const char* ssid = "";
+const char* password = "";
 
 WebServer server(80);  // Create a web server object on port 80
 
-const int ledPin = 14; 
+const int ledPin = 13; 
 bool ledState = false; 
 
 void setup() {
