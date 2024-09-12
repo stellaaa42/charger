@@ -17,11 +17,9 @@ WebServer server(80);
 
 CRGB leds[NUM_LEDS]; // Array for LED data
 
+
 // LED state for the strip
 bool ledStripOn = false;
-int colorIndex = 0;
-CRGB colorSequence[] = {CRGB::Red, CRGB::Green, CRGB::Blue, CRGB::Purple, CRGB::Yellow}; // Colors for sequence
-
 
 void setup() {
   Serial.begin(115200);
@@ -29,6 +27,7 @@ void setup() {
   // Initialize LED strip
   FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(BRIGHTNESS);
+  FastLED.setCorrection(TypicalLEDStrip); 
 
   // Connect to Wi-Fi
   WiFi.begin(ssid, password);
@@ -50,7 +49,17 @@ void setup() {
       ledStripOn = true;
       fill_solid(leds, NUM_LEDS, CRGB::White); // Set default color to blue
       FastLED.show();
-      server.send(200, "text/plain", "LED Strip Turned On and Set to White");
+      server.send(200, "text/plain", "LED Strip Turned On, try '/red', '/green', '/blue', 'purple', '/yellow', '/colors', '/white';)");
+    }
+  });
+
+  server.on("/white", HTTP_GET, []() {
+    if (ledStripOn) {
+      fill_solid(leds, NUM_LEDS, CRGB::White);
+      FastLED.show();
+      server.send(200, "text/plain", "LED Strip Color Set to White");
+    } else {
+      server.send(200, "text/plain", "LED Strip is Off. Turn it on first.");
     }
   });
 
@@ -76,7 +85,7 @@ void setup() {
 
   server.on("/blue", HTTP_GET, []() {
     if (ledStripOn) {
-      fill_solid(leds, NUM_LEDS, CRGB::White);
+      fill_solid(leds, NUM_LEDS, CRGB::Blue);
       FastLED.show();
       server.send(200, "text/plain", "LED Strip Color Set to Blue");
     } else {
@@ -99,17 +108,6 @@ void setup() {
       fill_solid(leds, NUM_LEDS, CRGB::Yellow);
       FastLED.show();
       server.send(200, "text/plain", "LED Strip Color Set to Yellow");
-    } else {
-      server.send(200, "text/plain", "LED Strip is Off. Turn it on first.");
-    }
-  });
-
-  server.on("/color", HTTP_GET, []() {
-    if (ledStripOn) {
-      fill_solid(leds, NUM_LEDS, colorSequence[colorIndex]); // Cycle through colors
-      FastLED.show();
-      colorIndex = (colorIndex + 1) % (sizeof(colorSequence) / sizeof(colorSequence[0])); // Increment colorIndex and loop back
-      server.send(200, "text/plain", "LED Strip Color Changed in Sequence");
     } else {
       server.send(200, "text/plain", "LED Strip is Off. Turn it on first.");
     }
