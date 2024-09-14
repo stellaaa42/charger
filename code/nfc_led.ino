@@ -29,6 +29,11 @@ void setup() {
   FastLED.setBrightness(BRIGHTNESS);
   FastLED.setCorrection(TypicalLEDStrip); 
 
+
+  ledStripOn = true;  // Set the default state of the LED strip to "on"
+  fill_solid(leds, NUM_LEDS, CRGB::Blue); // Default color set to white
+  FastLED.show();
+
   // Connect to Wi-Fi
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
