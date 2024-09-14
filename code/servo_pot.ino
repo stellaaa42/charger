@@ -28,7 +28,7 @@ void loop() {
 
   if (currentStateCLK != lastStateCLK) {
     // Determine direction by comparing DT and CLK
-    counter += (digitalRead(DT) != currentStateCLK) ? 1 : -1;
+    counter += (digitalRead(DT) == currentStateCLK) ? 1 : -1;
 
     // Map the counter value to a range for servo (0-180)
     currentPos = constrain(map(counter, -50, 50, 0, 180), 0, 180);
